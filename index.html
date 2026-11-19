@@ -200,7 +200,7 @@ footer{background:#14100e;color:#a59b92;text-align:center;font-size:14px;padding
 .bons{gap:22px}
 .guar{background:var(--cr)}
 </style>
-<script src="https://caktomate-synergy.lovable.app/tracking.js" defer></script>
+  <script src="https://caktomate-synergy.lovable.app/tracking.js" defer></script>
 </head>
 <body>
 
@@ -299,7 +299,6 @@ footer{background:#14100e;color:#a59b92;text-align:center;font-size:14px;padding
           <li class="bn"><span class="chk">★</span><span><span class="tg">BÔNUS 01 · GRÁTIS</span>Plano de estudo de 12 meses</span></li><li class="bn"><span class="chk">★</span><span><span class="tg">BÔNUS 02 · GRÁTIS</span>Guia de erros comuns</span></li><li class="bn"><span class="chk">★</span><span><span class="tg">BÔNUS 03 · ESPECIAL TROMPETE</span>Guia de compra: trompete e bocal para começar</span></li><li class="bn"><span class="chk">★</span><span><span class="tg">BÔNUS 04 · ESPECIAL TROMPETE</span>Aquecimento de lábios em 5 minutos</span></li>
         </ul>
         <div class="price">
-
           <div class="de">De <s>R$ 47,90</s></div>
           <div class="por">por apenas</div>
           <div class="val"><small>R$</small>17,90</div>
@@ -323,6 +322,7 @@ footer{background:#14100e;color:#a59b92;text-align:center;font-size:14px;padding
 
 <script>
 (function(){
+  // contagem regressiva real de 30 minutos
   var DUR=30*60*1000, end=null, key='om_trompete_end';
   try{var s=sessionStorage.getItem(key); if(s&&+s>Date.now()) end=+s;}catch(e){}
   if(!end){end=Date.now()+DUR; try{sessionStorage.setItem(key,String(end));}catch(e){}}
@@ -334,14 +334,18 @@ footer{background:#14100e;color:#a59b92;text-align:center;font-size:14px;padding
   }
   tick(); setInterval(tick,1000);
 
+  // rolagem suave até #comprar (não depende de hash)
   var buy=document.getElementById('comprar');
   document.querySelectorAll('[data-go]').forEach(function(a){
     a.addEventListener('click',function(e){e.preventDefault();buy.scrollIntoView({behavior:'smooth',block:'start'});});
   });
+  // não rolar para o topo enquanto o link de checkout é "#"
   var b=document.getElementById('buy');
   b.addEventListener('click',function(e){ if(b.getAttribute('href')==='#') e.preventDefault(); });
 
+
   var car=document.getElementById('car');
+  // seletor aluno / professor (sem clique = texto padrão para os dois)
   var cur='both', segBtns=[].slice.call(document.querySelectorAll('.seg button'));
   function setAud(a){
     cur=a;
@@ -358,10 +362,13 @@ footer{background:#14100e;color:#a59b92;text-align:center;font-size:14px;padding
   }
   segBtns.forEach(function(b){ b.addEventListener('click',function(){ var x=b.getAttribute('data-aud'); setAud(cur===x?'both':x); }); });
 
+  // carrossel
+
   function step(){ var s=car.querySelector('.slide'); return (s?s.getBoundingClientRect().width:300)+16; }
   document.getElementById('prev').onclick=function(){car.scrollBy({left:-step(),behavior:'smooth'});};
   document.getElementById('next').onclick=function(){car.scrollBy({left:step(),behavior:'smooth'});};
 
+  // lightbox
   var slides=[].slice.call(car.querySelectorAll('.slide')), cur=0;
   var lb=document.getElementById('lb'), lbi=document.getElementById('lbi'), lbc=document.getElementById('lbc'), lbb=document.getElementById('lbb');
   function show(i){
